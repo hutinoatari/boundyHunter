@@ -1,5 +1,6 @@
 const canvas = document.getElementById("screen");
 const fullscreenButton = document.getElementById("fullscreenButton");
+fullscreenButton.onclick = () => canvas.requestFullscreen();
 // 確認用canvas
 const axesCanvas = document.getElementById("axesScreen");
 axesCanvas.width = 320;
@@ -15,9 +16,12 @@ class Game {
         this.canvas = canvas;
         this.canvas.width = 320;
         this.canvas.height = 240;
+        this.playing = false;
     }
 
     start(){
+        if(this.playing) return;
+        this.playing = true;
         setInterval(this.step.bind(this), 1000 / this.fps);
     }
 
@@ -47,7 +51,7 @@ class Game {
 
     clearScreen(){
         const context = this.canvas.getContext("2d");
-        context.fillStyle = "white";
+        context.fillStyle = "lightgray";
         context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 }
